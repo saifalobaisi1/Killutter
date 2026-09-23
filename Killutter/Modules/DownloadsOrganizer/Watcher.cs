@@ -24,7 +24,12 @@ namespace Killutter.Modules.DownloadsOrganizer
             if (Directory.Exists(e.FullPath))
                 return;
 
-            string dest = Path.Combine(downloads, "sorted");
+            string Type = Classifier.Classify(e.FullPath);
+
+            if (Type == "Unsorted")
+                return;
+
+            string dest = Path.Combine(downloads, Type);
             dest = Path.Combine(dest, e.Name);
 
             bool success = Mover.Move(e.FullPath, dest);
