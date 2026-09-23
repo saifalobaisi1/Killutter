@@ -1,4 +1,5 @@
-﻿using System.Drawing.Text;
+﻿using Killutter.Shared;
+using System.Drawing.Text;
 
 namespace Killutter.Modules.DownloadsOrganizer
 {
@@ -30,10 +31,10 @@ namespace Killutter.Modules.DownloadsOrganizer
         public void Start()
         {
             watcher.EnableRaisingEvents = true;
-
+            Logger.Log(LogLevel.Info, "Watcher started");
         }
 
-        
+
 
 
     }
