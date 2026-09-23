@@ -9,16 +9,26 @@
             int Elapsed = 0;
             int Delay = 1;
 
+            int attempt = 0;
+            string finalDest = dest;
+
             try
             {
+                string Folder = Path.GetDirectoryName(dest);
+                Directory.CreateDirectory(Folder);
+
+                while (File.Exists(finalDest))
+                {
+                    attempt++;
+                    finalDest = BuildSuffixedPath(dest, attempt);
+                }
+
                 while (Elapsed < maxWaitSeconds)
                 {
 
                     try
                     {
-                        string Folder = Path.GetDirectoryName(dest);
-                        Directory.CreateDirectory(Folder);
-                        File.Move(path, dest);
+                        File.Move(path, finalDest);
                         return true;
                     }
                     catch (IOException e) when ((e.HResult & 0x0000FFFF) == 32)
@@ -37,6 +47,16 @@
                 MessageBox.Show(ex.Message);
                 return false;
             }
+        }
+
+        private static string BuildSuffixedPath(string dest, int attempt)
+        {
+            string folder = Path.GetDirectoryName(dest);
+            string name = Path.GetFileNameWithoutExtension(dest);
+            string ext = Path.GetExtension(dest);
+
+            string newName = $"{name} ({attempt}){ext}";
+            return Path.Combine(folder, newName);
         }
     }
 }
