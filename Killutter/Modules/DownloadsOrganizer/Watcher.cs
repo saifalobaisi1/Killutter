@@ -1,4 +1,6 @@
-﻿namespace Killutter.Modules.DownloadsOrganizer
+﻿using System.Drawing.Text;
+
+namespace Killutter.Modules.DownloadsOrganizer
 {
     internal class Watcher
     {
@@ -19,8 +21,17 @@
 
         public void OnCreated(object sender, FileSystemEventArgs e)
         {
-            string value = $"Created: {e.FullPath}";
-            MessageBox.Show(value);
+            if (Directory.Exists(e.FullPath))
+                return;
+
+            string dest = Path.Combine(downloads, "sorted");
+            dest = Path.Combine(dest, e.Name);
+
+            bool success = Mover.Move(e.FullPath, dest);
+            if (!success)
+            {
+                MessageBox.Show("Move failed for: " + e.FullPath);
+            }
         }
 
         public void Start()
