@@ -1,4 +1,6 @@
-﻿namespace Killutter.Modules.DownloadsOrganizer
+﻿using Killutter.Shared;
+
+namespace Killutter.Modules.DownloadsOrganizer
 {
     internal static class Mover
     {
@@ -44,7 +46,7 @@
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Logger.Log(LogLevel.Error, ex.Message);
                 return false;
             }
         }
