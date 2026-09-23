@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Killutter.Shared;
+using System.IO;
 
 namespace Killutter.Modules.DownloadsOrganizer
 {
@@ -17,12 +18,18 @@ namespace Killutter.Modules.DownloadsOrganizer
             bool success = Mover.Move(fullPath, dest);
             if (!success)
             {
-                MessageBox.Show("Move failed for: " + fullPath);
+                Logger.Log(LogLevel.Error, "Move failed for: " + fullPath);
+            }
+            else
+            {
+                Logger.Log(LogLevel.Info, $"Moved {fullPath} -> {dest}");
             }
         }
 
         public static void Sweep(string downloads)
         {
+            Logger.Log(LogLevel.Info, "Sweep started");
+
             string[] files = Directory.GetFiles(downloads);
 
             foreach (string file in files)
@@ -30,6 +37,8 @@ namespace Killutter.Modules.DownloadsOrganizer
                 string name = Path.GetFileName(file);
                 OrganizeFile(file, name, downloads);
             }
+
+            Logger.Log(LogLevel.Info, "Sweep finished");
         }
     }
 }
