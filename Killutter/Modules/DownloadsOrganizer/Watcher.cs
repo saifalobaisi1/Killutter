@@ -16,11 +16,20 @@ namespace Killutter.Modules.DownloadsOrganizer
             watcher = new FileSystemWatcher(downloads);
 
             watcher.Created += OnCreated;
+            watcher.Renamed += OnRenamed;
 
             watcher.EnableRaisingEvents = false;
         }
 
         public void OnCreated(object sender, FileSystemEventArgs e)
+        {
+            if (Directory.Exists(e.FullPath))
+                return;
+
+            Organizer.OrganizeFile(e.FullPath, e.Name, downloads);
+        }
+        
+        public void OnRenamed(object sender, RenamedEventArgs e)
         {
             if (Directory.Exists(e.FullPath))
                 return;
