@@ -15,6 +15,8 @@ namespace Killutter.Modules.DownloadsOrganizer
             downloads = Path.Combine(root, "Downloads");
             watcher = new FileSystemWatcher(downloads);
 
+            watcher.NotifyFilter = NotifyFilters.FileName;
+
             watcher.Created += OnCreated;
             watcher.Renamed += OnRenamed;
 
@@ -23,17 +25,11 @@ namespace Killutter.Modules.DownloadsOrganizer
 
         public void OnCreated(object sender, FileSystemEventArgs e)
         {
-            if (Directory.Exists(e.FullPath))
-                return;
-
             Organizer.OrganizeFile(e.FullPath, e.Name, downloads);
         }
         
         public void OnRenamed(object sender, RenamedEventArgs e)
         {
-            if (Directory.Exists(e.FullPath))
-                return;
-
             Organizer.OrganizeFile(e.FullPath, e.Name, downloads);
         }
 
