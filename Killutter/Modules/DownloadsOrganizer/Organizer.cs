@@ -15,15 +15,8 @@ namespace Killutter.Modules.DownloadsOrganizer
             string dest = Path.Combine(downloads, type);
             dest = Path.Combine(dest, name);
 
-            bool success = Mover.Move(fullPath, dest);
-            if (!success)
-            {
-                Logger.Log(LogLevel.Error, "Move failed for: " + fullPath);
-            }
-            else
-            {
-                Logger.Log(LogLevel.Info, $"Moved {fullPath} -> {dest}");
-            }
+             Mover.Move(fullPath, dest);
+            
         }
 
         public static void Sweep(string downloads)

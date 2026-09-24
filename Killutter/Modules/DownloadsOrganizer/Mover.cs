@@ -31,6 +31,7 @@ namespace Killutter.Modules.DownloadsOrganizer
                     try
                     {
                         File.Move(path, finalDest);
+                        Logger.Log(LogLevel.Info, $"Moved {path} -> {finalDest}");
                         return true;
                     }
                     catch (IOException e) when ((e.HResult & 0x0000FFFF) == 32)
