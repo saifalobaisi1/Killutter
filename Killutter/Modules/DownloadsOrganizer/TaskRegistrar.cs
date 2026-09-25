@@ -1,8 +1,7 @@
-﻿using Microsoft.Win32.TaskScheduler;
-using System;
-using System.Collections.Generic;
+﻿using Killutter.Shared;
+using Microsoft.Win32.TaskScheduler;
 using System.Security.Principal;
-using System.Text;
+using ScheduledTask = Microsoft.Win32.TaskScheduler.Task;
 
 namespace Killutter.Modules.DownloadsOrganizer
 {
@@ -10,25 +9,34 @@ namespace Killutter.Modules.DownloadsOrganizer
     {
         public static bool IsRegistered()
         {
-            string taskName = "Killutter";
+            ScheduledTask existingTask = TaskService.Instance.GetTask("Killutter");
 
-            using (TaskService ts = new TaskService())
+            if (existingTask == null)
             {
-                Task existingTask = ts.GetTask($@"\{taskName}");
-
-                if (existingTask != null)
-                {
-                    Console.WriteLine($"[FOUND] Task '{taskName}' is registered.");
-                    Console.WriteLine($"Status: {existingTask.State}");
-                    Console.WriteLine($"Last Run: {existingTask.LastRunTime}");
-                    return true;
-                }
-                else
-                {
-                    Console.WriteLine($"[NOT FOUND] Task '{taskName}' does not exist.");
-                    return false;
-                }
+                Logger.Log(LogLevel.Info, "Task 'Killutter' is not registered.");
+                return false;
             }
+
+            if (!existingTask.Definition.Triggers.Any(t => t is LogonTrigger))
+            {
+                Logger.Log(LogLevel.Warning, "Task 'Killutter' exists but has no LogonTrigger.");
+                return false;
+            }
+
+            if (!existingTask.Definition.Actions.OfType<ExecAction>().Any())
+            {
+                Logger.Log(LogLevel.Warning, "Task 'Killutter' exists but has no ExecAction.");
+                return false;
+            }
+
+            if (!existingTask.Definition.Settings.Enabled)
+            {
+                Logger.Log(LogLevel.Warning, "Task 'Killutter' exists but is disabled.");
+                return false;
+            }
+
+            Logger.Log(LogLevel.Info, $"Task 'Killutter' is registered and valid. Status: {existingTask.State}, Last Run: {existingTask.LastRunTime}");
+            return true;
         }
 
         public static void Register()
