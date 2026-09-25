@@ -55,9 +55,27 @@ namespace Killutter.Modules.DownloadsOrganizer
             TaskService.Instance.RootFolder.RegisterTaskDefinition("Killutter", td);
         }
 
-        public static void Unregister()
+        public static bool UnRegister()
         {
+            ScheduledTask existingTask = TaskService.Instance.GetTask("Killutter");
 
+            if (existingTask == null)
+            {
+                Logger.Log(LogLevel.Info, "Task 'Killutter' was not registered, nothing to unregister.");
+                return false;
+            }
+
+            try
+            {
+                TaskService.Instance.RootFolder.DeleteTask("Killutter");
+                Logger.Log(LogLevel.Info, "Task 'Killutter' unregistered.");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Error, $"Failed to unregister task 'Killutter': {ex.Message}");
+                return false;
+            }
         }
     }
 }
