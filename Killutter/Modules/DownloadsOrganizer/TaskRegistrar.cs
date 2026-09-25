@@ -51,7 +51,7 @@ namespace Killutter.Modules.DownloadsOrganizer
 
             td.Triggers.Add(lt);
             td.Settings.ExecutionTimeLimit = TimeSpan.Zero;
-            td.Actions.Add(Environment.ProcessPath, "c:\\test.log");
+            td.Actions.Add(Environment.ProcessPath);
 
             TaskService.Instance.RootFolder.RegisterTaskDefinition("Killutter", td);
         }
