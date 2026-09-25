@@ -47,6 +47,7 @@ namespace Killutter.Modules.DownloadsOrganizer
             LogonTrigger lt = new LogonTrigger();
             lt.Delay = TimeSpan.FromMinutes(1);
             lt.UserId = WindowsIdentity.GetCurrent().Name;
+            td.Principal.LogonType = TaskLogonType.InteractiveToken;
 
             td.Triggers.Add(lt);
             td.Settings.ExecutionTimeLimit = TimeSpan.Zero;
