@@ -1,4 +1,5 @@
-﻿using Killutter.Shared;
+﻿using Killutter.Modules.Shared;
+using Killutter.Shared;
 using System.IO;
 
 namespace Killutter.Modules.DownloadsOrganizer
@@ -32,6 +33,17 @@ namespace Killutter.Modules.DownloadsOrganizer
             }
 
             Logger.Log(LogLevel.Info, "Sweep finished");
+        }
+
+        public static string MatchGroup(string type, Config config)
+        {
+            foreach (Group group in config.GetGroups())
+            {
+                if (group.RecognizedTypes.Contains(type))
+                    return group.DestPath;
+            }
+
+            return null;
         }
     }
 }
