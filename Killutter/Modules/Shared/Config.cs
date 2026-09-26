@@ -31,5 +31,35 @@ namespace Killutter.Modules.Shared
             string json = JsonSerializer.Serialize(this);
             File.WriteAllText(configPath, json);
         }
+
+        public string GetWatchFolder()
+        {
+            return WatchFolder;
+        }
+
+        public void SetWatchFolder(string path)
+        {
+            WatchFolder = path;
+        }
+
+        public string GetLogPath()
+        {
+            return LogPath;
+        }
+
+        public void SetLogPath(string path)
+        {
+            LogPath = path;
+        }
+
+        public List<Group> GetGroups()
+        {
+            return new List<Group>(Groups);
+        }
+
+        public Group GetGroup(Guid id)
+        {
+            return Groups.Find(g => g.Id == id);
+        }
     }
 }
