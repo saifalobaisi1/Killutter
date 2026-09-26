@@ -18,10 +18,10 @@ namespace Killutter.Modules.DownloadsOrganizer
 
             string Type = CheckSignature(header);
 
-            if (Type == "ZIP")
+            if (Type == "zip")
                 Type = InspectZip(path);
 
-            else if (Type == "Unknown")
+            else if (Type == "unknown")
                 Type = CheckExtension(path);
 
             return Type;
@@ -31,32 +31,32 @@ namespace Killutter.Modules.DownloadsOrganizer
         {
             if (header.Length >= 4 && header[0] == 0x25 && header[1] == 0x50 &&
                 header[2] == 0x44 && header[3] == 0x46)
-                return "Documents"; // %PDF
+                return "pdf"; // %PDF
 
             if (header.Length >= 3 && header[0] == 0xFF && header[1] == 0xD8 && header[2] == 0xFF)
-                return "Pictures"; // JPEG
+                return "jpeg";
 
             if (header.Length >= 8 && header[0] == 0x89 && header[1] == 0x50 &&
                 header[2] == 0x4E && header[3] == 0x47)
-                return "Pictures"; // PNG
+                return "png";
 
             if (header.Length >= 3 && header[0] == 0x47 && header[1] == 0x49 && header[2] == 0x46)
-                return "Pictures"; // GIF
+                return "gif";
 
             if (header.Length >= 3 && header[0] == 0x49 && header[1] == 0x44 && header[2] == 0x33)
-                return "Audio"; // MP3 (ID3 tag)
+                return "mp3"; // ID3 tag
 
             if (header.Length >= 2 && header[0] == 0x4D && header[1] == 0x5A)
-                return "Installers"; // MZ - Windows EXE
+                return "exe"; // MZ - Windows EXE
 
             if (header.Length >= 3 && header[0] == 0x1F && header[1] == 0x8B)
-                return "Archives"; // GZIP
+                return "gzip";
 
             if (header.Length >= 4 && header[0] == 0x50 && header[1] == 0x4B &&
                 header[2] == 0x03 && header[3] == 0x04)
-                return "ZIP"; // needs inner inspection - handled separately
+                return "zip"; // needs inner inspection - handled separately
 
-            return "Unknown";
+            return "unknown";
         }
 
         private static string InspectZip(string path)
@@ -66,38 +66,38 @@ namespace Killutter.Modules.DownloadsOrganizer
                 foreach (ZipArchiveEntry entry in archive.Entries)
                 {
                     if (entry.FullName.StartsWith("word/"))
-                        return "Documents"; // .docx
+                        return "docx";
 
                     if (entry.FullName.StartsWith("ppt/"))
-                        return "Documents"; // .pptx
+                        return "pptx";
 
                     if (entry.FullName.StartsWith("xl/"))
-                        return "Documents"; // .xlsx
+                        return "xlsx";
 
                     if (entry.FullName == "AndroidManifest.xml")
-                        return "Installers"; // .apk
+                        return "apk";
 
                     if (entry.FullName == "META-INF/MANIFEST.MF")
-                        return "Archives"; // .jar
+                        return "jar";
                 }
             }
 
-            return "Archives"; // plain zip, nothing more specific matched
+            return "zip"; // plain zip, nothing more specific matched
         }
 
         private static string CheckExtension(string path)
         {
             string ext = Path.GetExtension(path).ToLower();
 
-            if (ext == ".txt" || ext == ".csv" || ext == ".md" || ext == ".log")
-                return "Text";
-
-            if (ext == ".json" || ext == ".py" || ext == ".js")
-                return "Code";
+            if (ext == ".txt") return "txt";
+            if (ext == ".csv") return "csv";
+            if (ext == ".md") return "md";
+            if (ext == ".log") return "log";
+            if (ext == ".json") return "json";
+            if (ext == ".py") return "py";
+            if (ext == ".js") return "js";
 
             return "Unsorted";
         }
-
-
     }
 }
