@@ -61,5 +61,17 @@ namespace Killutter.Modules.Shared
         {
             return Groups.Find(g => g.Id == id);
         }
+
+        public void AddGroup(string name, string destPath, List<string> recognizedTypes)
+        {
+            Groups.Add(new Group(name, destPath, recognizedTypes));
+        }
+
+        public void DeleteGroup(Guid id)
+        {
+            Group group = GetGroup(id);
+
+            Groups.Remove(group);
+        }
     }
 }
