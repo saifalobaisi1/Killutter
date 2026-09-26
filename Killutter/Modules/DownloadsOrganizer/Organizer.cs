@@ -6,17 +6,19 @@ namespace Killutter.Modules.DownloadsOrganizer
 {
     internal static class Organizer
     {
-        public static void OrganizeFile(string fullPath, string name, string downloads)
+        public static void OrganizeFile(string fullPath, string name, Config config)
         {
             string type = Classifier.Classify(fullPath);
-
             if (type == "Unsorted")
                 return;
 
-            string dest = Path.Combine(downloads, type);
-            dest = Path.Combine(dest, name);
+            string path = MatchGroup(type, config);
+            if (path == null)
+                return;
 
-             Mover.Move(fullPath, dest);
+            path = Path.Combine(path, name);
+
+             Mover.Move(fullPath, path);
             
         }
 
