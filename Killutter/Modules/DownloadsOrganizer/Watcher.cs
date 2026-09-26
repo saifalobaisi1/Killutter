@@ -1,19 +1,18 @@
-﻿using Killutter.Shared;
+﻿using Killutter.Modules.Shared;
+using Killutter.Shared;
 using System.Drawing.Text;
 
 namespace Killutter.Modules.DownloadsOrganizer
 {
     internal class Watcher
     {
-        private string root;
-        private string downloads;
+        private Config config;
         private FileSystemWatcher watcher;
 
-        public Watcher()
+        public Watcher(Config config)
         {
-            root = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            downloads = Path.Combine(root, "Downloads");
-            watcher = new FileSystemWatcher(downloads);
+            this.config = config;
+            watcher = new FileSystemWatcher(config.GetWatchFolder());
 
             watcher.NotifyFilter = NotifyFilters.FileName;
 
@@ -25,12 +24,12 @@ namespace Killutter.Modules.DownloadsOrganizer
 
         public void OnCreated(object sender, FileSystemEventArgs e)
         {
-            Organizer.OrganizeFile(e.FullPath, e.Name, downloads);
+            Organizer.OrganizeFile(e.FullPath, e.Name, config);
         }
         
         public void OnRenamed(object sender, RenamedEventArgs e)
         {
-            Organizer.OrganizeFile(e.FullPath, e.Name, downloads);
+            Organizer.OrganizeFile(e.FullPath, e.Name, config);
         }
 
         public void Start()
