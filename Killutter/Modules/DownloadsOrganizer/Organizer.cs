@@ -22,16 +22,16 @@ namespace Killutter.Modules.DownloadsOrganizer
             
         }
 
-        public static void Sweep(string downloads)
+        public static void Sweep(Config config)
         {
             Logger.Log(LogLevel.Info, "Sweep started");
 
-            string[] files = Directory.GetFiles(downloads);
+            string[] files = Directory.GetFiles(config.GetWatchFolder());
 
             foreach (string file in files)
             {
                 string name = Path.GetFileName(file);
-                OrganizeFile(file, name, downloads);
+                OrganizeFile(file, name, config);
             }
 
             Logger.Log(LogLevel.Info, "Sweep finished");
