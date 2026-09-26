@@ -22,13 +22,13 @@ namespace Killutter.Modules.Shared
             }
 
             string json = File.ReadAllText(configPath);
-            return JsonSerializer.Deserialize<Config>(json);
+            return JsonSerializer.Deserialize<Config>(json, new JsonSerializerOptions { IncludeFields = true });
         }
 
         public void Save()
         {
             Directory.CreateDirectory(Path.GetDirectoryName(configPath));
-            string json = JsonSerializer.Serialize(this);
+            string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { IncludeFields = true });
             File.WriteAllText(configPath, json);
         }
 
