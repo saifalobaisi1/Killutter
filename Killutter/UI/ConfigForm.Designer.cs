@@ -222,7 +222,7 @@
             Controls.Add(Watchfolder);
             Controls.Add(Watchpath);
             Name = "ConfigForm";
-            Text = "ConfigForm";
+            Text = "Killutter";
             Load += ConfigForm_Load;
             panel1.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
