@@ -1,17 +1,28 @@
+using System;
+using System.Windows.Forms;
+using Killutter.Modules.Shared;
+using Killutter.Modules.DownloadsOrganizer;
+using Killutter.Shared;
+using Killutter.UI;
+
 namespace Killutter
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            //Application.Run(new Form1());
+
+            Config config = Config.Load();
+            Logger.SetLogPath(config.GetLogPath());
+
+            Watcher watcher = new Watcher(config);
+
+            Organizer.Sweep(config);
+            watcher.Start();
+
+            Application.Run(new ConfigForm(config));
         }
     }
 }
