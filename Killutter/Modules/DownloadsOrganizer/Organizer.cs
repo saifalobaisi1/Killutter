@@ -8,6 +8,12 @@ namespace Killutter.Modules.DownloadsOrganizer
     {
         public static void OrganizeFile(string fullPath, string name, Config config)
         {
+            if (!WaitUntilReady(fullPath))
+            {
+                Logger.Log(LogLevel.Warning, $"File never became ready, skipping: {fullPath}");
+                return;
+            }
+
             string type = Classifier.Classify(fullPath);
             if (type == "Unsorted")
                 return;
