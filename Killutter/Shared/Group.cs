@@ -1,4 +1,4 @@
-﻿namespace Killutter.Modules.Shared
+﻿namespace Killutter.Shared
 {
     public record Group
     {

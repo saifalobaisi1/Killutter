@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-using Killutter.Modules.Shared;
-using Killutter.Modules.DownloadsOrganizer;
+﻿using Killutter.Modules.DownloadsOrganizer;
 using Killutter.Shared;
 
 namespace Killutter.UI

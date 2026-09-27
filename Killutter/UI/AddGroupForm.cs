@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-using Killutter.Modules.Shared;
+﻿using Killutter.Shared;
 
 namespace Killutter.UI
 {

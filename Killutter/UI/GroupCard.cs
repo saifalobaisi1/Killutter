@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿using Killutter.Shared;
 using System.Drawing.Drawing2D;
-using System.Text;
-using System.Windows.Forms;
 
 namespace Killutter.UI
 {
@@ -33,12 +27,12 @@ namespace Killutter.UI
             this.Region = new Region(path);
         }
 
-        private Killutter.Modules.Shared.Group group;
+        private Group group;
 
         public event EventHandler EditClicked;
         public event EventHandler DeleteClicked;
 
-        public void SetGroup(Killutter.Modules.Shared.Group g)
+        public void SetGroup(Group g)
         {
             group = g;
             Groupname.Text = g.Name;

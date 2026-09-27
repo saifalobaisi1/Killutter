@@ -1,6 +1,4 @@
-﻿using Killutter.Modules.Shared;
-using Killutter.Shared;
-using System.IO;
+﻿using Killutter.Shared;
 
 namespace Killutter.Modules.DownloadsOrganizer
 {

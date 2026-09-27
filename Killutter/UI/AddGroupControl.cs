@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-
-namespace Killutter.UI
+﻿namespace Killutter.UI
 {
     public partial class AddGroupControl : UserControl
     {

@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Killutter.Shared
+﻿namespace Killutter.Shared
 {
     public enum LogLevel
     {

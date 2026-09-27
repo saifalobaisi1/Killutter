@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Killutter.Modules.Shared
+namespace Killutter.Shared
 {
     public class Config
     {
