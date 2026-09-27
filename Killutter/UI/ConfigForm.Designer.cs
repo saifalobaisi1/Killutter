@@ -64,7 +64,7 @@
             Watchfolder.Size = new Size(75, 15);
             Watchfolder.TabIndex = 1;
             Watchfolder.Text = "Watch folder";
-            Watchfolder.Click += label2_Click;
+            Watchfolder.Click += WatchfolderLabel_Click;
             // 
             // Logfile
             // 
@@ -143,7 +143,7 @@
             linkLabel1.TabIndex = 10;
             linkLabel1.TabStop = true;
             linkLabel1.Text = "📁";
-            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
+            linkLabel1.LinkClicked += LogFolderIcon_LinkClicked;
             // 
             // AddGroup
             // 
@@ -173,7 +173,7 @@
             RunAtStartup.TabIndex = 14;
             RunAtStartup.Text = "Run At Startup";
             RunAtStartup.UseVisualStyleBackColor = true;
-            RunAtStartup.CheckedChanged += checkBox1_CheckedChanged;
+            RunAtStartup.CheckedChanged += RunAtStartup_CheckedChanged;
             // 
             // panel1
             // 
