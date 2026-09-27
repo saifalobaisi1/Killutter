@@ -9,18 +9,28 @@ namespace Killutter
         [STAThread]
         static void Main()
         {
-            ApplicationConfiguration.Initialize();
+            bool isNewInstance;
+            using (Mutex mutex = new Mutex(true, "Killutter_SingleInstance_Mutex", out isNewInstance))
+            {
+                if (!isNewInstance)
+                {
+                    MessageBox.Show("Killutter is already running.");
+                    return;
+                }
 
-            Config config = Config.Load();
-            Logger.SetLogPath(config.GetLogPath());
+                ApplicationConfiguration.Initialize();
 
-            Watcher watcher = new Watcher(config);
-            Organizer.Sweep(config);
-            watcher.Start();
+                Config config = Config.Load();
+                Logger.SetLogPath(config.GetLogPath());
 
-            TrayIcon tray = new TrayIcon(config);
+                Watcher watcher = new Watcher(config);
+                Organizer.Sweep(config);
+                watcher.Start();
 
-            Application.Run();
+                TrayIcon tray = new TrayIcon(config);
+
+                Application.Run();
+            }
         }
     }
 }
