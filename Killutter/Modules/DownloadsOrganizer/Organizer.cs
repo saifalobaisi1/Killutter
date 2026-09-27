@@ -47,5 +47,30 @@ namespace Killutter.Modules.DownloadsOrganizer
 
             return null;
         }
+
+        public static bool WaitUntilReady(string path, int maxWaitSeconds = 300, int maxDelayCapSeconds = 30)
+        {
+            int elapsed = 0;
+            int delay = 1;
+
+            while (elapsed < maxWaitSeconds)
+            {
+                try
+                {
+                    using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                    {
+                        return true;
+                    }
+                }
+                catch (IOException e) when ((e.HResult & 0x0000FFFF) == 32)
+                {
+                    Thread.Sleep(delay * 1000);
+                    elapsed += delay;
+                    delay = Math.Min(delay * 2, maxDelayCapSeconds);
+                }
+            }
+
+            return false;
+        }
     }
 }
