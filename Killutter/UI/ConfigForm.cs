@@ -102,5 +102,11 @@ namespace Killutter.UI
             if (form.ShowDialog() == DialogResult.OK)
                 RefreshGroupList();
         }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
+        }
     }
 }

@@ -18,11 +18,12 @@ namespace Killutter
             Logger.SetLogPath(config.GetLogPath());
 
             Watcher watcher = new Watcher(config);
-
             Organizer.Sweep(config);
             watcher.Start();
 
-            Application.Run(new ConfigForm(config));
+            TrayIcon tray = new TrayIcon(config);
+
+            Application.Run();
         }
     }
 }
